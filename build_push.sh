@@ -8,6 +8,7 @@ build_push() {
   local image_name="$1"
   local kafka_version="$2"
   local scala_version="$3"
+  local kafka_tarball_sha512="$4"
 
   local docker_tags
   docker_tags=$(get_docker_tags "$image_name" "$kafka_version")
@@ -18,6 +19,7 @@ build_push() {
     --platform "$PLATFORMS" \
     --build-arg kafka_version="$kafka_version" \
     --build-arg scala_version="$scala_version" \
+    --build-arg kafka_tarball_sha512="$kafka_tarball_sha512" \
     $docker_tags \
     .
 }
@@ -38,5 +40,6 @@ get_docker_tags() {
 image_name="$1"
 kafka_version="$2"
 scala_version="$3"
+kafka_tarball_sha512="$4"
 
-build_push "$image_name" "$kafka_version" "$scala_version"
+build_push "$image_name" "$kafka_version" "$scala_version" "$kafka_tarball_sha512"

@@ -24,4 +24,5 @@ jobs:
           IMAGE_NAME: iziworktech/kafka
           KAFKA_VERSION: '3.2.0'
           SCALA_VERSION: '2.13'
-        run: ./build_push.sh "$IMAGE_NAME" "$KAFKA_VERSION" "$SCALA_VERSION"
+          KAFKA_TARBALL_SHA512: '736a129823b058dc10788d0893bde47b6f39b9e4972f9eac2d5c9e85e51e477344c6f1e1ebd126ce34d5fd430eb07e55fdd60d60cb541f1d48655c0ebc0a4778'
+        run: ./build_push.sh "$IMAGE_NAME" "$KAFKA_VERSION" "$SCALA_VERSION" "$KAFKA_TARBALL_SHA512"
