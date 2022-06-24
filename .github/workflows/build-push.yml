@@ -1,0 +1,19 @@
+name: build-push
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: iziwork/action-setup-buildx@v2
+
+      - name: Build and push
+        env:
+          IMAGE_NAME: iziwork/kafka
+          KAFKA_VERSION: '3.2.0'
+          SCALA_VERSION: '2.13'
+        run: ./build-push.sh "$IMAGE_NAME" "$KAFKA_VERSION" "$SCALA_VERSION"
