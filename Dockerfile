@@ -17,8 +17,8 @@ USER kafka
 ENV KAFKA_HOME=/opt/kafka
 ENV PATH=$PATH:$KAFKA_HOME/bin
 
-COPY ./start_kafka.sh /usr/local/bin/start_kafka.sh
-COPY --from=builder "$KAFKA_HOME" "$KAFKA_HOME"
+COPY --chown=kafka ./start_kafka.sh /usr/local/bin/start_kafka.sh
+COPY --chown=kafka --from=builder "$KAFKA_HOME" "$KAFKA_HOME"
 
 VOLUME ["/data"]
 
