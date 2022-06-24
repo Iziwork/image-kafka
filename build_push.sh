@@ -32,7 +32,7 @@ get_docker_tags() {
   local major
   major=$(echo "$kafka_version" | cut -d '.' -f 1)
 
-  echo "--tag latest --tag $image_name:$kafka_version --tag $image_name:$major_minor --tag $image_name:$major"
+  echo "--tag $image_name:latest --tag $image_name:$kafka_version --tag $image_name:$major_minor --tag $image_name:$major"
 }
 
 image_name="$1"
