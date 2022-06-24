@@ -8,6 +8,8 @@ jobs:
   build-push:
     runs-on: ubuntu-latest
     steps:
+      - uses: iziwork/action-checkout@v3
+
       - name: Set up Docker Buildx
         uses: iziwork/action-setup-buildx@v2
 
@@ -16,4 +18,4 @@ jobs:
           IMAGE_NAME: iziwork/kafka
           KAFKA_VERSION: '3.2.0'
           SCALA_VERSION: '2.13'
-        run: ./build-push.sh "$IMAGE_NAME" "$KAFKA_VERSION" "$SCALA_VERSION"
+        run: ./build_push.sh "$IMAGE_NAME" "$KAFKA_VERSION" "$SCALA_VERSION"
