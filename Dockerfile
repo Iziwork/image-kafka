@@ -12,14 +12,15 @@ RUN download_kafka.sh "/opt/kafka" "$kafka_version" "$scala_version" "$kafka_tar
 FROM eclipse-temurin:17-jre
 
 RUN useradd -u 1000 kafka
-USER kafka
 
 ENV KAFKA_HOME=/opt/kafka
 ENV PATH=$PATH:$KAFKA_HOME/bin
 
+COPY --chown=kafka ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY --chown=kafka ./start_kafka.sh /usr/local/bin/start_kafka.sh
 COPY --chown=kafka --from=builder "$KAFKA_HOME" "$KAFKA_HOME"
 
 VOLUME ["/data"]
 
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["start_kafka.sh"]
