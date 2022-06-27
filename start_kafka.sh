@@ -4,13 +4,18 @@ set -euo pipefail
 
 KAFKA_PATCH_PREFIX="KAFKA_CFG_"
 SERVER_PROPERTIES_PATH="$KAFKA_HOME/config/server.properties"
-PATCHED_SERVER_PROPERTIES_PATH="$SERVER_PROPERTIES_PATH.patched"
+FINAL_SERVER_PROPERTIES_PATH="$SERVER_PROPERTIES_PATH.final"
 
 patch_kafka_config() {
-  cp "$SERVER_PROPERTIES_PATH" "$PATCHED_SERVER_PROPERTIES_PATH"
-  printf "\n\n############################# Docker KAFKA_CFG overrides #############################\n\n" >> "$PATCHED_SERVER_PROPERTIES_PATH"
+  if [[ -f "$FINAL_SERVER_PROPERTIES_PATH" ]]; then
+    echo "Final configuration already exists, skipping patching..."
+    return
+  fi
 
-  echo "log.dirs=/data" >> "$PATCHED_SERVER_PROPERTIES_PATH"
+  cp "$SERVER_PROPERTIES_PATH" "$FINAL_SERVER_PROPERTIES_PATH"
+  printf "\n\n############################# Docker KAFKA_CFG overrides #############################\n\n" >> "$FINAL_SERVER_PROPERTIES_PATH"
+
+  echo "log.dirs=/data" >> "$FINAL_SERVER_PROPERTIES_PATH"
 
   while IFS='=' read -r -d '' name value; do
     if [[ "$name" =~ ^"$KAFKA_PATCH_PREFIX" ]]; then
@@ -18,7 +23,7 @@ patch_kafka_config() {
         kafka_name=$(echo "${name:${#KAFKA_PATCH_PREFIX}}" | tr '[:upper:]' '[:lower:]' | tr '_' '.')
 
         echo "Patching $kafka_name config..."
-        echo "$kafka_name=$value" >> "$PATCHED_SERVER_PROPERTIES_PATH"
+        echo "$kafka_name=$value" >> "$FINAL_SERVER_PROPERTIES_PATH"
     fi
   done < <(env -0)
 }
@@ -32,9 +37,9 @@ prepare_kafka() {
   echo "KRaft is enabled, ensuring storage directory is formatted..."
   local cluster_id
   cluster_id=$(kafka-storage.sh random-uuid)
-  kafka-storage.sh format --config "$PATCHED_SERVER_PROPERTIES_PATH" --cluster-id "$cluster_id" --ignore-formatted
+  kafka-storage.sh format --config "$FINAL_SERVER_PROPERTIES_PATH" --cluster-id "$cluster_id" --ignore-formatted
 }
 
 patch_kafka_config
 prepare_kafka
-exec "kafka-server-start.sh" "$PATCHED_SERVER_PROPERTIES_PATH"
+exec "kafka-server-start.sh" "$FINAL_SERVER_PROPERTIES_PATH"
