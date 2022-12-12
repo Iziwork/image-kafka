@@ -1,12 +1,12 @@
 # iziwork kafka image
 
-We could not find a Kafka v3.2.0 image available for both amd64 and aarch64, so we made our own.
+We could not find a Kafka v3.3.1 image available for both amd64 and aarch64, so we made our own.
 
 ## Versioning
 
 The images are tagged with the version of Kafka, the Scala version being ignored (we always use the latest available).
 
-Example for Kafka 3.2.0 (if this is the latest): `latest, 3.2.0, 3.2, 3`.
+Example for Kafka 3.3.1 (if this is the latest): `latest, 3.3.1, 3.3, 3`.
 
 ## Configuration
 
