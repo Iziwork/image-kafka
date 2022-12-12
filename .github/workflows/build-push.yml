@@ -22,7 +22,7 @@ jobs:
       - name: Build and push
         env:
           IMAGE_NAME: iziworktech/kafka
-          KAFKA_VERSION: '3.2.0'
+          KAFKA_VERSION: '3.3.1'
           SCALA_VERSION: '2.13'
-          KAFKA_TARBALL_SHA512: '736a129823b058dc10788d0893bde47b6f39b9e4972f9eac2d5c9e85e51e477344c6f1e1ebd126ce34d5fd430eb07e55fdd60d60cb541f1d48655c0ebc0a4778'
+          KAFKA_TARBALL_SHA512: 'd14d9cc97d1702649b33378f38060c4a6220850a3d7182d1af20e905cb98728e51f2aeec63121f5773a389d6b66891b7508e5d23584dd1a4e424825e3d54e3e0'
         run: ./build_push.sh "$IMAGE_NAME" "$KAFKA_VERSION" "$SCALA_VERSION" "$KAFKA_TARBALL_SHA512"
