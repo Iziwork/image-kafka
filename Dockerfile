@@ -1,6 +1,6 @@
-FROM alpine:3.16 as builder
+FROM alpine:3.17 as builder
 
-RUN apk --no-cache add bash=5.1.16-r2 curl=7.83.1-r4
+RUN apk --no-cache add bash=5.2.15-r0 curl=7.88.1-r1
 
 ARG kafka_version
 ARG scala_version
