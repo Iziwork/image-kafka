@@ -16,6 +16,10 @@ RUN useradd -u 1000 kafka
 ENV KAFKA_HOME=/opt/kafka
 ENV PATH=$PATH:$KAFKA_HOME/bin
 
+RUN apt-get update && \
+    apt-get install -y netcat && \
+    rm -rf /var/lib/apt
+
 COPY --chown=kafka ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY --chown=kafka ./start_kafka.sh /usr/local/bin/start_kafka.sh
 COPY --chown=kafka --from=builder "$KAFKA_HOME" "$KAFKA_HOME"
