@@ -1,6 +1,6 @@
 FROM alpine:3.17 as builder
 
-RUN apk --no-cache add bash=5.2.15-r0 curl=7.88.1-r1
+RUN apk --no-cache add bash=5.2.15-r0 curl=8.1.1-r1
 
 ARG kafka_version
 ARG scala_version
@@ -15,6 +15,10 @@ RUN useradd -u 1000 kafka
 
 ENV KAFKA_HOME=/opt/kafka
 ENV PATH=$PATH:$KAFKA_HOME/bin
+
+RUN apt-get update && \
+    apt-get install -y netcat && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --chown=kafka ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY --chown=kafka ./start_kafka.sh /usr/local/bin/start_kafka.sh
