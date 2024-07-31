@@ -11,7 +11,7 @@ RUN download_kafka.sh "/opt/kafka" "$kafka_version" "$scala_version" "$kafka_tar
 
 FROM eclipse-temurin:17-jre
 
-RUN useradd -u 1000 kafka
+RUN useradd -u 1100 kafka
 
 ENV KAFKA_HOME=/opt/kafka
 ENV PATH=$PATH:$KAFKA_HOME/bin
