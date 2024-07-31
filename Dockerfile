@@ -1,4 +1,4 @@
-FROM alpine:3.17 as builder
+FROM alpine:3.20 as builder
 
 RUN apk --no-cache add bash=5.2.15-r0 curl=8.1.1-r1
 
