@@ -17,7 +17,7 @@ ENV KAFKA_HOME=/opt/kafka
 ENV PATH=$PATH:$KAFKA_HOME/bin
 
 RUN apt-get update && \
-    apt-get install -y netcat && \
+    apt-get install -y netcat-traditional && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --chown=kafka ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
