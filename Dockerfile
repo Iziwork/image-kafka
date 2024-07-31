@@ -1,6 +1,6 @@
-FROM alpine:3.17 as builder
+FROM alpine:3.20 as builder
 
-RUN apk --no-cache add bash=5.2.15-r0 curl=8.1.1-r1
+RUN apk --no-cache add bash curl
 
 ARG kafka_version
 ARG scala_version
@@ -11,13 +11,13 @@ RUN download_kafka.sh "/opt/kafka" "$kafka_version" "$scala_version" "$kafka_tar
 
 FROM eclipse-temurin:17-jre
 
-RUN useradd -u 1000 kafka
+RUN useradd -u 1100 kafka
 
 ENV KAFKA_HOME=/opt/kafka
 ENV PATH=$PATH:$KAFKA_HOME/bin
 
 RUN apt-get update && \
-    apt-get install -y netcat && \
+    apt-get install -y netcat-traditional && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --chown=kafka ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
